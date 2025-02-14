@@ -2,19 +2,37 @@ import React, { useState } from 'react'
 import Button from './Button'
 
 const Add = ({add}) => {
-  const [name,setName] = useState("")  
+  const [name,setName] = useState("");
+  const [price,setPrice] = useState("");
+  const onsubmit = (e) => {
+    e.preventDefault();
+    if (!name || !price ) {
+      alert("Ingresa algo ")
+      return
+    };
+    add({name,price});
+    setName("");
+    setPrice("");
+  };
   return (
-    <div>
+    <form onSubmit={onsubmit}>
         <input 
-            onCHange={(e) => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             value={name}
             type = "text" 
             name="" 
             id="">
         </input>
+        <input 
+            onChange={(e) => setPrice(e.target.value)}
+            value={price}
+            type = "text" 
+            name="" 
+            id="">
+        </input>
         <input type = "text" name="" id=""></input>
-        <Button name = "Agregar"/>    
-    </div>
+        <input type = "submit" name = "Agregar"/>    
+    </form>
   );
 };
 
