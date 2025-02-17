@@ -6,6 +6,9 @@ import Footer from './Components/Footer';
 import Button from './Components/Button';
 import List from './Components/List';
 import Add from './Components/Add';
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import ResponsiveAppBar from './Components/ResponsiveAppBar';
+import CredentialsSignInPage from './Components/Login';
 
 function App() {
   const [items, setItems] = useState([
@@ -35,18 +38,27 @@ function App() {
   };
   return (
     <div>
-      <Header/>
-      <h1>{count}</h1>
+      <BrowserRouter>
+        <ResponsiveAppBar></ResponsiveAppBar>
+        <Header/>
+          <Routes>
+            <Route path="/add" element={<Add add={add}/>}/>
+            <Route path="/items" element={<List items={items} ondelete={del}/>}/>
+          </Routes>
+        <Footer/>
+      </BrowserRouter>
+      {/*
+          <h1>{count}</h1>
+          
+          <Button name={"Suma"} click={sum}/>
+          <Button name={"Resta"} click={resta}/>
+          <Button name={"Mensaje"} click={() => alert("hola")}/>
+          
+          <Add add={add}/>
+          
+          <List items={items} ondelete={del}/>*/}
       
-      <Button name={"Suma"} click={sum}/>
-      <Button name={"Resta"} click={resta}/>
-      <Button name={"Mensaje"} click={() => alert("hola")}/>
-      <Add add={add}/>
       
-      <List items={items} ondelete={del}/>
-      
-      
-      <Footer/>
     </div>
   );
 }
