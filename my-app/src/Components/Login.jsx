@@ -1,38 +1,58 @@
-import * as React from 'react';
-import { AppProvider } from '@toolpad/core/AppProvider';
-import { SignInPage, type AuthProvider } from '@toolpad/core/SignInPage';
-import { useTheme } from '@mui/material/styles';
+import { TextField, Box } from '@mui/material';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';  
 
-// preview-start
-const providers = [{ id: 'credentials', name: 'Email and Password' }];
-// preview-end
+const Login = ({ login }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();  
 
-const signIn: (provider: AuthProvider, formData: FormData) => void = async (
-  provider,
-  formData,
-) => {
-  const promise = new Promise<void>((resolve) => {
-    setTimeout(() => {
-      alert(
-        `Signing in with "${provider.name}" and credentials: ${formData.get('email')}, ${formData.get('password')}`,
-      );
-      resolve();
-    }, 300);
-  });
-  return promise;
+  const onsubmit = (e) => {
+    e.preventDefault();
+    if (!username || !password) {
+      alert("Los campos no deben estar vacíos");
+      return;
+    }
+
+    const isLoginSuccess = login({ username, password });
+
+    if (isLoginSuccess) {
+      alert("Login exitoso!");
+      setUsername("");
+      setPassword("");
+      navigate("/");  
+    } else {
+      alert("Algo salió mal, por favor intenta nuevamente.");
+    }
+  };
+
+  return (
+    <form onSubmit={onsubmit}>
+      <Box
+        margin="auto"
+        flexDirection="column"
+        display="flex"
+        width={400}
+        marginTop="10px"
+      >
+        <TextField 
+          label="Username"
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          margin="normal"
+        />
+        <TextField 
+          label="Password"
+          type="password"  
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          margin="normal"
+        />
+        <button type="submit">Login</button> 
+      </Box>
+    </form>
+  );
 };
 
-export default function CredentialsSignInPage() {
-  const theme = useTheme();
-  return (
-    // preview-start
-    <AppProvider theme={theme}>
-      <SignInPage
-        signIn={signIn}
-        providers={providers}
-        slotProps={{ emailField: { autoFocus: false } }}
-      />
-    </AppProvider>
-    // preview-end
-  );
-}
+export default Login;

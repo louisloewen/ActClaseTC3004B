@@ -15,7 +15,7 @@ const Add = ({add}) => {
     add({name,price});
     setName("");
     setPrice("");
-    navigate("/items")
+    navigate("/lista-items")
   };
   return (
     <form onSubmit={onsubmit}>

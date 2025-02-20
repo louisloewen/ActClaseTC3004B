@@ -8,7 +8,9 @@ import List from './Components/List';
 import Add from './Components/Add';
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import ResponsiveAppBar from './Components/ResponsiveAppBar';
-import CredentialsSignInPage from './Components/Login';
+import Login from './Components/Login';
+import Home from './Components/Home';
+import Logout from './Components/Logout';
 
 function App() {
   const [items, setItems] = useState([
@@ -36,27 +38,37 @@ function App() {
   const del = (id) => {
     setItems(items.filter((item) => item.id !== id));
   };
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const login = (user) => {
+    let islogin = false
+    if (user.username === "Abdiel" && user.password === "1234"){
+        islogin=true;
+      }
+    setIsAuthenticated(islogin); 
+  return islogin;
+  };
+
+  const logout = () => {
+    let islogin = false
+    setIsAuthenticated(islogin);
+    return islogin
+  };
+
   return (
     <div>
       <BrowserRouter>
-        <ResponsiveAppBar></ResponsiveAppBar>
-        <Header/>
+      <ResponsiveAppBar isAuthenticated={isAuthenticated} logout={logout} />
           <Routes>
-            <Route path="/add" element={<Add add={add}/>}/>
-            <Route path="/items" element={<List items={items} ondelete={del}/>}/>
+            <Route path="/home" element={<Home />} />      
+            <Route path="/agregar-item" element={<Add add={add}/>}/>
+            <Route path="/lista-items" element={<List items={items} ondelete={del}/>}/>
+            <Route path="/login" element={!isAuthenticated ? <Login login={login} /> : <Home />} />
           </Routes>
         <Footer/>
       </BrowserRouter>
-      {/*
-          <h1>{count}</h1>
-          
-          <Button name={"Suma"} click={sum}/>
-          <Button name={"Resta"} click={resta}/>
-          <Button name={"Mensaje"} click={() => alert("hola")}/>
-          
-          <Add add={add}/>
-          
-          <List items={items} ondelete={del}/>*/}
+    
       
       
     </div>

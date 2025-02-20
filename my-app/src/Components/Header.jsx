@@ -5,8 +5,8 @@ function Header() {
   return (
     <div>
       <h1>Header</h1>
-      <Link to="/add">Agregar</Link>
-      <Link to="/items">Articulos</Link>
+      <Link to="/agregar-item">Agregar</Link>
+      <Link to="/lista-items">Articulos</Link>
     </div>
   )
 }
