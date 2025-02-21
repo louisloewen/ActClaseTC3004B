@@ -3,8 +3,8 @@ import React from 'react';
 const Home = () => {
   return (
     <div>
-      <h1>Bienvenido a la Página de Inicio</h1>
-      <p>Este es el contenido principal de tu aplicación.</p>
+      <h1>¡Bienvenido! Esta es la página de inicio</h1>
+      <p>Aqui estara el contenido principal de tu aplicación.</p>
     </div>
   );
 }

@@ -10,7 +10,7 @@ const Login = ({ login }) => {
   const onsubmit = (e) => {
     e.preventDefault();
     if (!username || !password) {
-      alert("Los campos no deben estar vacíos");
+      alert("Los campos no pueden estar vacíos");
       return;
     }
 
@@ -22,7 +22,7 @@ const Login = ({ login }) => {
       setPassword("");
       navigate("/");  
     } else {
-      alert("Algo salió mal, por favor intenta nuevamente.");
+      alert("Algo salió mal, por favor intenta de nuevo.");
     }
   };
 

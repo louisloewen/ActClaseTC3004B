@@ -17,9 +17,6 @@ import { useNavigate } from 'react-router-dom';
 function ResponsiveAppBar({ isAuthenticated, logout }) {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-
-  
-
   const handleCloseNavMenu = (e) => {
     setAnchorElNav(null);
     if (e === "Logout") {
@@ -38,7 +35,7 @@ function ResponsiveAppBar({ isAuthenticated, logout }) {
         <Typography variant="h6" style={{ flexGrow: 1 }}>
           LOGO
         </Typography>
-        {['Home', 'Lista-Items', 'Agregar-Item'].map((page) => (
+        {['Home', 'Lista de Items', 'Agregar Item'].map((page) => (
           <Button key={page} color="inherit" onClick={() => handleCloseNavMenu(page)}>
             {page}
           </Button>
