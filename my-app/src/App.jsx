@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Button from './Components/Button';
@@ -13,41 +13,55 @@ import Home from './Components/Home';
 import Logout from './Components/Logout';
 
 function App() {
-  const [items, setItems] = useState([
-    { id: 1, name: "item1", price: 1 },
-    { id: 2, name: "item2", price: 2 },
-    { id: 3, name: "item3", price: 3 }
-  ]);
-
-  let [count,setCount] = useState(0);
-  const sum = () => {
-    setCount(count+1);
+  const [items, setItems] = useState([]);
+  const [count,setCount] = useState(0);
+  const [isLogin, setIsLogin] = useState(false);
+  useEffect(() => {
+    if(isLogin){
+      getItems();
+    }
+  }, [IsLogin]);
+  const getItems = async () => {
+    const result = await fetch("https://localhost:5000/items/");
+    const data = await result.json();
+    setItems(data);
   };
-  const resta = () => {
-    setCount(count-1);
-  };
+  // const sum = () => {
+  //   setCount(count+1);
+  // };
+  // const resta = () => {
+  //   setCount(count-1);
+  // };
 
-  const nombre = "Hugo Reyes";
-  const elemento = <h1>Hello, {nombre}</h1>;
-
-  const add = (item) => {
-    item.id = items.length + 1
+  // const nombre = "Hugo Reyes";
+  // const elemento = <h1>Hello, {nombre}</h1>;
+  const add = async(item) => {
+    // item.id = items.length + 1
+    const result = await fetch("http://localhost:5000/items/",{
+      method:"POST", 
+      headers: {"content-type":"application-json"},
+      body: JSON.stringify(item),
+    });
+    const data = await result.json();
     setItems([...items, item]);
   };
 
-  const del = (id) => {
+  const del = async(id) => {
+    await fetch("http://localhost:5000/login/" + id,{method: "DELETE" });
     setItems(items.filter((item) => item.id !== id));
   };
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const login = (user) => {
-    let islogin = false
-    if (user.username === "Abdiel" && user.password === "1234"){
-        islogin=true;
-      }
-    setIsAuthenticated(islogin); 
-  return islogin;
+  const login = async (user) => {
+    const result = await fetch("http://localhost:5000/login/",{
+    method:"POST", 
+    headers: {"content-type":"application-json"},
+    body: JSON.stringify(user),
+  });
+  const data = result.json();
+  setIsLogin(data.isLogin);
+  return data.isLogin;
   };
 
   const logout = () => {
@@ -68,9 +82,6 @@ function App() {
           </Routes>
         <Footer/>
       </BrowserRouter>
-    
-      
-      
     </div>
   );
 }
